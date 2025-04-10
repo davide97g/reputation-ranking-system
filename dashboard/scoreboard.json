@@ -1,0 +1,32 @@
+[
+  {
+    "user": "davide97g",
+    "pr_opened": 9,
+    "pr_merged": 9,
+    "review": 1,
+    "commit": 9,
+    "issue": 0,
+    "docs": 10,
+    "totalScore": 196
+  },
+  {
+    "user": "LordNik10",
+    "pr_opened": 2,
+    "pr_merged": 2,
+    "review": 0,
+    "commit": 7,
+    "issue": 0,
+    "docs": 0,
+    "totalScore": 44
+  },
+  {
+    "user": "turbobot-temp",
+    "pr_opened": 0,
+    "pr_merged": 0,
+    "review": 0,
+    "commit": 2,
+    "issue": 0,
+    "docs": 1,
+    "totalScore": 8
+  }
+]
