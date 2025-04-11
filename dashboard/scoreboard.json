@@ -1,23 +1,23 @@
 [
   {
-    "user": "davide97g",
-    "pr_opened": 9,
-    "pr_merged": 9,
-    "review": 1,
-    "commit": 9,
-    "issue": 0,
-    "docs": 10,
-    "totalScore": 196
+    "user": "LordNik10",
+    "pr_opened": 1,
+    "pr_merged": 1,
+    "review": 0,
+    "commit": 20,
+    "issue": 4,
+    "docs": 2,
+    "totalScore": 67
   },
   {
-    "user": "LordNik10",
-    "pr_opened": 2,
-    "pr_merged": 2,
-    "review": 0,
-    "commit": 7,
-    "issue": 0,
-    "docs": 0,
-    "totalScore": 44
+    "user": "davide97g",
+    "pr_opened": 0,
+    "pr_merged": 0,
+    "review": 2,
+    "commit": 3,
+    "issue": 6,
+    "docs": 3,
+    "totalScore": 30
   },
   {
     "user": "turbobot-temp",

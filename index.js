@@ -9,8 +9,8 @@ configDotenv();
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-const OWNER = "davide97g"; // Cambia con il tuo
-const REPO = "pixel-world"; // Cambia con il tuo
+const OWNER = "bitrockteam"; // Cambia con il tuo
+const REPO = "bitrock-center"; // Cambia con il tuo
 
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
