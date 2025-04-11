@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🎖 Contributor Badges</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f9fafb;
+        color: #333;
+        padding: 2rem;
+      }
+      h1 {
+        text-align: center;
+      }
+      .badges {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      .badge-card {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        transition: transform 0.2s ease;
+      }
+      .badge-card:hover {
+        transform: scale(1.02);
+      }
+      .badge-card img {
+        max-width: 100%;
+      }
+      .username {
+        margin-top: 0.5rem;
+        font-weight: bold;
+        font-size: 0.95rem;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎖 Contributor Badges</h1>
+    <div class="badges" id="badges"></div>
+
+    <script>
+      fetch("scoreboard.json")
+        .then((res) => res.json())
+        .then((data) => {
+          const container = document.getElementById("badges");
+
+          data.forEach((contributor) => {
+            const user = contributor.user;
+            const badgeUrl = `badges/${user}.svg`;
+            const profileUrl = `https://github.com/${user}`;
+
+            const card = document.createElement("div");
+            card.className = "badge-card";
+            card.innerHTML = `
+            <a href="${profileUrl}" target="_blank">
+              <img src="${badgeUrl}" alt="${user} badge"/>
+              <div class="username">@${user}</div>
+            </a>
+          `;
+            container.appendChild(card);
+          });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contributors Scoreboard</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2rem;
+        background: #f7f9fc;
+        color: #333;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+      }
+      th,
+      td {
+        padding: 0.75rem;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        cursor: pointer;
+        background: #f0f0f0;
+      }
+      tr:hover {
+        background: #f9f9f9;
+      }
+      .gold {
+        background: #ffd70033;
+      }
+      .silver {
+        background: #c0c0c033;
+      }
+      .bronze {
+        background: #cd7f3233;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🏆 Contributors Leaderboard</h1>
+    <table id="leaderboard">
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Contributor</th>
+          <th>PR</th>
+          <th>Merged</th>
+          <th>Reviews</th>
+          <th>Commits</th>
+          <th>Issues</th>
+          <th>Docs</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      fetch("scoreboard.json")
+        .then((res) => res.json())
+        .then((data) => {
+          const tbody = document.querySelector("tbody");
+
+          data.forEach((d, i) => {
+            const tr = document.createElement("tr");
+            if (i === 0) tr.classList.add("gold");
+            else if (i === 1) tr.classList.add("silver");
+            else if (i === 2) tr.classList.add("bronze");
+
+            tr.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${d.user}</td>
+            <td>${d.pr_opened}</td>
+            <td>${d.pr_merged}</td>
+            <td>${d.review}</td>
+            <td>${d.commit}</td>
+            <td>${d.issue}</td>
+            <td>${d.docs}</td>
+            <td><strong>${d.totalScore}</strong></td>
+          `;
+            tbody.appendChild(tr);
+          });
+        });
+    </script>
+  </body>
+</html>
