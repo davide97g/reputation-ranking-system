@@ -32,10 +32,13 @@ jobs:
       - name: ▶️ Run score generator
         run: node index.js
 
+      - name: 🧹 Format
+        run: yarn format
+
       - name: 🚀 Commit scoreboard, dashboard & badges
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add CONTRIBUTORS_SCOREBOARD.md dashboard/scoreboard.json badges/
-          git commit -m "🔁 Update scoreboard, dashboard & badges [auto]" || echo "No changes"
+          git add output/CONTRIBUTORS_SCOREBOARD.md output/scoreboard.json
+          git commit -m "🔁 Update scoreboard [auto]" || echo "No changes"
           git push

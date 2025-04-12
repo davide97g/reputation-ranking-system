@@ -1,13 +1,14 @@
 import { configDotenv } from "dotenv";
 import fs from "fs";
 import { Octokit } from "octokit";
-import path from "path";
 
 configDotenv();
 
 // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+const outputDir = "output";
 
 const OWNER = "bitrockteam"; // Cambia con il tuo
 const REPO = "bitrock-center"; // Cambia con il tuo
@@ -119,7 +120,7 @@ async function main() {
       .then((res) => res.data.files || []);
 
     const docFiles = files.filter(
-      (f) => f.filename.endsWith(".md") || f.filename.startsWith("docs/")
+      (f) => f.filename.endsWith(".md") || f.filename.startsWith("docs/"),
     );
     if (docFiles.length > 0) {
       increment(scores, author, "docs");
@@ -140,7 +141,7 @@ async function main() {
   Object.entries(scores).forEach(([user, data]) => {
     const totalScore = Object.entries(data).reduce(
       (sum, [key, val]) => sum + val * SCORE_RULES[key],
-      0
+      0,
     );
 
     console.log(`${user} → ${JSON.stringify(data)} ⇒ 🏆 Score: ${totalScore}`);
@@ -150,8 +151,6 @@ async function main() {
   writeScoreboard(scores);
   // Scrivi il punteggio in un file JSON
   writeJSON(scores);
-  // Crea i badge SVG
-  createBadges(scores);
 }
 
 function writeScoreboard(scores) {
@@ -165,7 +164,7 @@ function writeScoreboard(scores) {
     .map(([user, data]) => {
       const totalScore = Object.entries(data).reduce(
         (sum, [key, val]) => sum + val * SCORE_RULES[key],
-        0
+        0,
       );
       return { user, ...data, totalScore };
     })
@@ -173,11 +172,11 @@ function writeScoreboard(scores) {
 
   for (const s of sorted) {
     lines.push(
-      `| ${s.user} | ${s.pr_opened} | ${s.pr_merged} | ${s.review} | ${s.commit} | ${s.issue} | ${s.docs} | ${s.totalScore} |`
+      `| ${s.user} | ${s.pr_opened} | ${s.pr_merged} | ${s.review} | ${s.commit} | ${s.issue} | ${s.docs} | ${s.totalScore} |`,
     );
   }
 
-  fs.writeFileSync("CONTRIBUTORS_SCOREBOARD.md", lines.join("\n"));
+  fs.writeFileSync(`${outputDir}/CONTRIBUTORS_SCOREBOARD.md`, lines.join("\n"));
   console.log("\n✅ File CONTRIBUTORS_SCOREBOARD.md aggiornato!");
 }
 
@@ -186,55 +185,17 @@ function writeJSON(scores) {
     .map(([user, data]) => {
       const totalScore = Object.entries(data).reduce(
         (sum, [key, val]) => sum + val * SCORE_RULES[key],
-        0
+        0,
       );
       return { user, ...data, totalScore };
     })
     .sort((a, b) => b.totalScore - a.totalScore);
 
   fs.writeFileSync(
-    "dashboard/scoreboard.json",
-    JSON.stringify(sorted, null, 2)
+    `${outputDir}/scoreboard.json`,
+    JSON.stringify(sorted, null, 2),
   );
   console.log("✅ scoreboard.json aggiornato");
-}
-
-function generateBadge(username, score) {
-  const color = score >= 100 ? "green" : score >= 50 ? "orange" : "gray";
-
-  return `
-  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="20">
-    <linearGradient id="g" x2="0" y2="100%">
-      <stop offset="0%" stop-color="#fff" stop-opacity=".1"/>
-      <stop offset="1%" stop-opacity=".1"/>
-    </linearGradient>
-    <rect rx="3" width="200" height="20" fill="#555"/>
-    <rect rx="3" x="80" width="120" height="20" fill="${color}"/>
-    <path fill="${color}" d="M80 0h4v20h-4z"/>
-    <rect rx="3" width="200" height="20" fill="url(#g)"/>
-    <g fill="#fff" text-anchor="middle"
-       font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
-      <text x="40" y="14">🏅 ${username}</text>
-      <text x="140" y="14">${score} pts</text>
-    </g>
-  </svg>`.trim();
-}
-
-function createBadges(scores) {
-  // Genera badge SVG
-  const outputDir = "badges";
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
-
-  Object.entries(scores).forEach(([user, data]) => {
-    const total = Object.entries(data).reduce(
-      (sum, [key, val]) => sum + val * SCORE_RULES[key],
-      0
-    );
-    const badge = generateBadge(user, total);
-    fs.writeFileSync(path.join(outputDir, `${user}.svg`), badge);
-  });
-
-  console.log("🏅 Badge SVG generati in /badges");
 }
 
 main().catch(console.error);
