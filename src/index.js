@@ -4,14 +4,34 @@ import { Octokit } from "octokit";
 
 configDotenv();
 
-// Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
+const OWNER = process.env.GITHUB_OWNER;
+const REPO = process.env.GITHUB_REPO;
 
-const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+if (!OWNER || !REPO) {
+  console.error(
+    "Please set the GITHUB_OWNER and GITHUB_REPO environment variables.",
+  );
+  process.exit(1);
+}
+console.log(`Repository: ${OWNER}/${REPO}`);
+
+// Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+if (!GITHUB_TOKEN) {
+  console.error(
+    "Please set the GITHUB_TOKEN environment variable with your GitHub token.",
+  );
+  process.exit(1);
+}
+console.log("Using GitHub token for authentication...");
+// Create an instance of Octokit with the token
+const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 const outputDir = "output";
-
-const OWNER = "bitrockteam"; // Cambia con il tuo
-const REPO = "bitrock-center"; // Cambia con il tuo
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir);
+  console.log(`Directory ${outputDir} created.`);
+}
 
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
