@@ -29,6 +29,11 @@ jobs:
       - name: 🔐 Setup GitHub token
         run: echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" > .env
 
+      - name: 🔐 Setup GitHub owner and repo
+        run: |
+          echo "GITHUB_OWNER=${{ github.repository_owner }}" >> .env
+          echo "GITHUB_REPO=${{ github.event.repository.name }}" >> .env
+
       - name: ▶️ Run score generator
         run: node index.js
 
