@@ -61,7 +61,20 @@ The results will be saved in the `output` folder in 3 different formats:
 - `scoreboard.html`
 - `scoreboard.json`
 
-## Feedbacks and contributions
+## Contributing
 
-If you have some feedback and want to contribute you can do it directly here in this repository!
-You can open a bug, add more documentation, propose or develop a feature straight forward.
+- Fork the repository
+- Create a feature branch
+- Commit your changes
+- Push to the branch
+- Create a Pull Request
+
+Important: Please keep your pull requests small and focused. This will make it easier to review and merge.
+
+## Feature Requests
+
+If you have a feature request, please open an [issue](https://github.com/davide97g/reputation-ranking-system/issues) and make sure it is tagged with enhancement.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
