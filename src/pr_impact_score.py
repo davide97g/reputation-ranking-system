@@ -13,8 +13,8 @@ load_dotenv()
 
 
 # === CONFIGURAZIONE ===
-OWNER = os.environ.get("GITHUB_OWNER") 
-REPO = os.environ.get("GITHUB_REPO")  # Nome del repository
+OWNER = os.environ.get("GITHUB_OWNER",'bitrockteam') 
+REPO = os.environ.get("GITHUB_REPO",'bitrock-center')  # Nome del repository
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")  # Token di accesso personale
 
 print(f"OWNER: {OWNER}")
