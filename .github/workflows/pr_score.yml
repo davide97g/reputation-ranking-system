@@ -19,8 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install tree_sitter=0.21.3
-          pip install tree_sitter_languages=1.5.0
+          pip install tree_sitter==0.21.3
+          pip install tree_sitter_languages==1.5.0
 
       - name: Run PR Score script
         env:
