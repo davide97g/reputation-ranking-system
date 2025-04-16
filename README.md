@@ -43,6 +43,9 @@ GITHUB_TOKEN=your-token-here
 
 ### Run locally
 
+- `pip install -f requirements.txt`
+- `python -m rsa.main`
+
 - `yarn` or `npm i` to install dependencies (original setup with yarn, so there will be a yarn.lock, it is fine to have a package-lock.json if you use npm)
 - add two lines to the `.env` files by specifying:
 

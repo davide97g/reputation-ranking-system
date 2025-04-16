@@ -11,13 +11,13 @@
   },
   {
     "user": "davide97g",
-    "pr_opened": 0,
-    "pr_merged": 0,
+    "pr_opened": 1,
+    "pr_merged": 1,
     "review": 2,
-    "commit": 3,
-    "issue": 6,
-    "docs": 3,
-    "totalScore": 30
+    "commit": 4,
+    "issue": 7,
+    "docs": 5,
+    "totalScore": 56
   },
   {
     "user": "turbobot-temp",
@@ -28,5 +28,15 @@
     "issue": 0,
     "docs": 1,
     "totalScore": 8
+  },
+  {
+    "user": "GianlucaLaRosa",
+    "pr_opened": 0,
+    "pr_merged": 0,
+    "review": 1,
+    "commit": 0,
+    "issue": 0,
+    "docs": 0,
+    "totalScore": 3
   }
 ]

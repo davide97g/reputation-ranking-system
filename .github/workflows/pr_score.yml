@@ -22,11 +22,11 @@ jobs:
           pip install tree_sitter==0.21.3
           pip install tree_sitter_languages==1.5.0
           pip install requests
-          pip install github
+          pip install PyGithub
 
       - name: Run PR Score script
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python src/pr_score.py
+          python rsa/main.py
