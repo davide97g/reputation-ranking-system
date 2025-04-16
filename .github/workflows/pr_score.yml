@@ -1,0 +1,32 @@
+name: PR Score Calculation
+
+on:
+  pull_request:
+    paths:
+      - "**/*"
+
+jobs:
+  calculate_score:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          pip install tree_sitter==0.21.3
+          pip install tree_sitter_languages==1.5.0
+          pip install requests
+          pip install PyGithub
+
+      - name: Run PR Score script
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python rsa/main.py
