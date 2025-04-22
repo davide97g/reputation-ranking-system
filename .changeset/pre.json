@@ -1,14 +1,8 @@
 {
   "mode": "pre",
   "tag": "beta",
-  "changesets": [
-    "evil-monkeys-divide",
-    "rare-readers-battle",
-    "sad-yaks-dig",
-    "tidy-states-smell",
-    "tired-hats-sneeze"
-  ],
+  "changesets": ["evil-monkeys-divide"],
   "initialVersions": {
-    "reputation-scoring": "0.0.5"
+    "reputation-scoring": "0.1.0"
   }
 }
