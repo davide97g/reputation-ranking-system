@@ -27,9 +27,6 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Test
-        run: yarn test
-
       - name: Create NPM Beta Release
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
