@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "changesets": [
+    "evil-monkeys-divide"
+  ],
+  "initialVersions": {
+    "reputation-scoring": "0.1.0"
+  }
+}
