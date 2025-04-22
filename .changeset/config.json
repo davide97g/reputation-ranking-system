@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [],
+  "changelog": [
+    "@changesets/cli/changelog",
+    { "repo": "davide97g/reputation-ranking-system" }
+  ],
+  "commit": true
+}

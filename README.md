@@ -43,7 +43,7 @@ GITHUB_TOKEN=your-token-here
 
 ### Run locally
 
-- `yarn` or `npm i` to install dependencies (original setup with yarn, so there will be a yarn.lock, it is fine to have a package-lock.json if you use npm)
+- `yarn` to install dependencies (original setup with yarn, so there will be a yarn.lock, it is fine to have a package-lock.json if you use npm)
 - add two lines to the `.env` files by specifying:
 
   ```bash
@@ -53,13 +53,7 @@ GITHUB_TOKEN=your-token-here
   GITHUB_REPO=github-repo-name
   ```
 
-- `yarn dev`: will run the algorithm against the specificed repo
-
-The results will be saved in the `output` folder in 3 different formats:
-
-- `CONTRIBUTORS_SCOREBOARD.md`
-- `scoreboard.html`
-- `scoreboard.json`
+- `yarn dev`: will run the algorithm against the specificed repo using the entrypoint `test.js`
 
 ## Contributing
 
@@ -67,7 +61,7 @@ The results will be saved in the `output` folder in 3 different formats:
 - Create a feature branch
 - Commit your changes
 - Push to the branch
-- Create a Pull Request
+- Create a Pull Request against `develop` branch
 
 Important: Please keep your pull requests small and focused. This will make it easier to review and merge.
 
