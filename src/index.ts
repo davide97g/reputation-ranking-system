@@ -167,7 +167,14 @@ export async function computeReputationScoring({
     userScores.push({ user, score: totalScore });
   });
 
-  return userScores;
+  return {
+    userScores,
+    stats: {
+      totalPullRequests: prs.length,
+      totalCommits: commits.length,
+      totalIssues: issues.length,
+    },
+  };
 
   // Scrivi il punteggio in un file Markdown
   // writeScoreboard(scores);
