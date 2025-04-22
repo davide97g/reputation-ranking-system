@@ -7,7 +7,7 @@
   "updateInternalDependencies": "patch",
   "ignore": [],
   "changelog": [
-    "@changesets/changelog-github",
+    "@changesets/cli/changelog",
     { "repo": "davide97g/reputation-ranking-system" }
   ],
   "commit": true
