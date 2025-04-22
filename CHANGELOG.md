@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- 84cd0fb: Trigger publish npm in one pipeline
+
 ## 0.1.0-beta.2
 
 ### Patch Changes
