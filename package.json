@@ -10,8 +10,8 @@
     "dev": "yarn build && source .env && node simulate.js",
     "build": "tsc",
     "package:preview": "npm pack --dry-run",
-    "pre-release": "npm publish tag --beta",
-    "release": "npm publish"
+    "changeset": "npx changeset",
+    "release": "changeset publish"
   },
   "type": "module",
   "types": "dist/index.d.ts",
@@ -24,10 +24,14 @@
     "octokit": "^4.1.2"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.2",
     "@types/node": "^22.14.1",
     "dotenv-cli": "^8.0.0",
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

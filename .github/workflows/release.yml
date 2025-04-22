@@ -1,36 +1,36 @@
-name: Release
+name: Version & Tag
 
 on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
-  build-and-release:
+  version:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
+          registry-url: "https://registry.npmjs.org/"
 
-      - name: Install Yarn
-        run: npm install --global yarn
+      - name: Install dependencies
+        run: npm ci
 
-      - name: 📦 Install dependencies
-        run: yarn
+      - name: Enter pre mode for beta (only on develop)
+        if: github.ref == 'refs/heads/develop'
+        run: npx changeset pre enter beta
 
-      - name: Build
-        run: yarn build
+      - name: Exit pre mode (only on main)
+        if: github.ref == 'refs/heads/main'
+        run: npx changeset pre exit
 
-      - name: Create NPM Release
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          yarn release
+      - name: Create version bump commit or tag
+        uses: changesets/action@v1
+        with:
+          publish: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
