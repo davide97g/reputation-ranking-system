@@ -1,4 +1,11 @@
 {
   "mode": "pre",
-  "tag": "beta"
+  "tag": "beta",
+  "changesets": [
+    "tidy-states-smell",
+    "tired-hats-sneeze"
+  ],
+  "initialVersions": {
+    "reputation-scoring": "0.0.5"
+  }
 }
