@@ -2,6 +2,7 @@
   "mode": "pre",
   "tag": "beta",
   "changesets": [
+    "rare-readers-battle",
     "sad-yaks-dig",
     "tidy-states-smell",
     "tired-hats-sneeze"

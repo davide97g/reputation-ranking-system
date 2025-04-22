@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.1.0-beta.2
+
+### Patch Changes
+
+- 47e6178: pipeline trigger test
+
 ## 0.1.0-beta.1
 
 ### Patch Changes
