@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "reputation-scoring": "0.1.0"
+  },
+  "changesets": [
+    "smart-lands-exist"
+  ]
+}
