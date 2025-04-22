@@ -25,7 +25,12 @@ jobs:
 
       - name: Enter pre mode for beta (only on develop)
         if: github.ref == 'refs/heads/develop'
-        run: npx changeset pre enter beta
+        run: |
+          if [ ! -f .changeset/pre.json ]; then
+            npx changeset pre enter beta
+          else
+            echo "Already in pre mode, skipping"
+          fi
 
       - name: Exit pre mode (only on main)
         if: github.ref == 'refs/heads/main'
