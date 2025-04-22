@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.2.0
+
+### Minor Changes
+
+- fbcc595: Stats output
+
 ## 0.2.0-beta.0
 
 ### Minor Changes
