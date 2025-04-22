@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "reputation-scoring": "0.2.1"
+  },
+  "changesets": [
+    "rare-pens-lick"
+  ]
+}

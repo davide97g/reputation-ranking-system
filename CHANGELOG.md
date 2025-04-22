@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.2.2-beta.0
+
+### Patch Changes
+
+- 60ac2b0: Fix release action
+
 ## 0.2.0
 
 ### Minor Changes
