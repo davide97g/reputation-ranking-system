@@ -64,9 +64,9 @@ jobs:
       - name: Publish to npm
         run: |
           if [[ "${GITHUB_REF}" == *"-beta."* ]]; then
-            npm run release -- --tag beta
+            npm publish -- --tag beta
           else
-            npm run release
+            npm publish
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
