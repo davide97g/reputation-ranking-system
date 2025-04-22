@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.1.0-beta.1
+
+### Patch Changes
+
+- 1afafb8: streamline ci/cd pipelines with npm publish
+
 ## 0.1.0-beta.0
 
 ### Minor Changes
