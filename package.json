@@ -1,6 +1,6 @@
 {
   "name": "reputation-scoring",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Library for calculating reputation scores based on GitHub activity.",
   "author": "Davide Ghiotto",
   "license": "MIT",
@@ -10,8 +10,7 @@
     "dev": "yarn build && source .env && node simulate.js",
     "build": "tsc",
     "package:preview": "npm pack --dry-run",
-    "changeset": "npx changeset",
-    "release": "changeset publish"
+    "changeset": "npx changeset"
   },
   "type": "module",
   "types": "dist/index.d.ts",
