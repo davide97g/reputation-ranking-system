@@ -2,6 +2,12 @@
 
 ## 0.1.0
 
+### Patch Changes
+
+- 84cd0fb: Trigger publish npm in one pipeline
+
+## 0.1.0
+
 ### Minor Changes
 
 - 329457a: Setup CI/CD changeset and npm automatic publish
