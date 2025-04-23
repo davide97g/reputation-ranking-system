@@ -1,3 +1,4 @@
+import { computeStructuralComplexity } from "./complexity.js";
 import {
   getCommits,
   getFilesChanged,
@@ -6,7 +7,7 @@ import {
   getPullRequests,
   getReviews,
   initOctokit,
-} from "./repository";
+} from "./repository.js";
 
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
@@ -28,6 +29,7 @@ export function increment(scores: any, user: string, type: string, amount = 1) {
       commit: 0,
       issue: 0,
       docs: 0,
+      complexity: 0,
     };
   }
   scores[user][type] += amount;
@@ -87,6 +89,18 @@ export async function computeReputationScoring({
     if (docFiles.length > 0) {
       increment(scores, author, "docs");
     }
+    files.map((f: any) => {
+      const extension = f.filename.split(".").pop();
+      if (extension === "js" || extension === "ts" || extension === "tsx") {
+        if (f.patch) {
+          const score = computeStructuralComplexity(f.patch, extension);
+          console.log(
+            `File: ${f.filename} - Complexity: ${score.toFixed(2)} - Author: ${author}`,
+          );
+          increment(scores, author, "complexity", score);
+        }
+      }
+    });
   }
 
   console.log("🐛 Issues...");
