@@ -9,6 +9,7 @@
     "format": "prettier --write .",
     "dev": "yarn build && source .env && node simulate.js",
     "build": "tsc",
+    "test": "jest",
     "package:preview": "npm pack --dry-run",
     "changeset": "npx changeset"
   },
@@ -24,10 +25,13 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.2",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.14.1",
     "dotenv-cli": "^8.0.0",
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
+    "ts-jest": "^29.3.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "publishConfig": {

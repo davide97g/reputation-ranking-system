@@ -1,4 +1,12 @@
-import { Octokit } from "octokit";
+import {
+  getCommits,
+  getFilesChanged,
+  getFilesChangedFromCommit,
+  getIssues,
+  getPullRequests,
+  getReviews,
+  initOctokit,
+} from "./repository";
 
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
@@ -10,61 +18,7 @@ const SCORE_RULES = {
   docs: 4,
 };
 
-async function getPullRequests(owner: string, repo: string, octokit: any) {
-  return await octokit.paginate(octokit.rest.pulls.list, {
-    owner,
-    repo,
-    state: "all",
-    per_page: 100,
-  });
-}
-
-async function getReviews(
-  owner: string,
-  repo: string,
-  pullNumber: string,
-  octokit: any,
-) {
-  const { data } = await octokit.rest.pulls.listReviews({
-    owner,
-    repo,
-    pull_number: pullNumber,
-  });
-  return data;
-}
-
-async function getCommits(owner: string, repo: string, octokit: any) {
-  return await octokit.paginate(octokit.rest.repos.listCommits, {
-    owner,
-    repo,
-    per_page: 100,
-  });
-}
-
-async function getIssues(owner: string, repo: string, octokit: any) {
-  return await octokit.paginate(octokit.rest.issues.listForRepo, {
-    owner,
-    repo,
-    state: "all",
-    per_page: 100,
-  });
-}
-
-async function getFilesChanged(
-  owner: string,
-  repo: string,
-  pullNumber: string,
-  octokit: any,
-) {
-  const { data } = await octokit.rest.pulls.listFiles({
-    owner,
-    repo,
-    pull_number: pullNumber,
-  });
-  return data.map((file: any) => file.filename);
-}
-
-function increment(scores: any, user: string, type: string, amount = 1) {
+export function increment(scores: any, user: string, type: string, amount = 1) {
   if (!user) return;
   if (!scores[user]) {
     scores[user] = {
@@ -93,27 +47,26 @@ export async function computeReputationScoring({
   repo: string;
   token?: string;
 }) {
-  // Create an instance of Octokit with the token
-  const octokit = new Octokit({ auth: token });
-
   const scores = {};
 
+  initOctokit(token);
+
   console.log("🔍 Pull Request...");
-  const prs = await getPullRequests(owner, repo, octokit);
+  const prs = await getPullRequests(owner, repo);
 
   for (const pr of prs) {
     const author = pr.user?.login;
     increment(scores, author, "pr_opened");
     if (pr.merged_at) increment(scores, author, "pr_merged");
 
-    const reviews = await getReviews(owner, repo, pr.number, octokit);
+    const reviews = await getReviews(owner, repo, pr.number);
     for (const review of reviews) {
       if (review.user?.login !== author) {
         increment(scores, review.user?.login, "review");
       }
     }
 
-    const files = await getFilesChanged(owner, repo, pr.number, octokit);
+    const files = await getFilesChanged(owner, repo, pr.number);
     const isDoc = files.some(
       (f: string) => f.endsWith(".md") || f.startsWith("docs/"),
     );
@@ -121,18 +74,12 @@ export async function computeReputationScoring({
   }
 
   console.log("📦 Commit...");
-  const commits = await getCommits(owner, repo, octokit);
+  const commits = await getCommits(owner, repo);
   for (const commit of commits) {
     const author = commit.author?.login;
     increment(scores, author, "commit");
 
-    const files = await octokit.rest.repos
-      .getCommit({
-        owner,
-        repo,
-        ref: commit.sha,
-      })
-      .then((res: any) => res.data.files || []);
+    const files = await getFilesChangedFromCommit(owner, repo, commit);
 
     const docFiles = files.filter(
       (f: any) => f.filename.endsWith(".md") || f.filename.startsWith("docs/"),
@@ -143,7 +90,7 @@ export async function computeReputationScoring({
   }
 
   console.log("🐛 Issues...");
-  const issues = await getIssues(owner, repo, octokit);
+  const issues = await getIssues(owner, repo);
   for (const issue of issues) {
     // esclude le PR (GitHub le mostra tra le issue)
     if (!issue.pull_request) {
