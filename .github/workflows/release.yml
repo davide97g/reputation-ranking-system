@@ -31,6 +31,9 @@ jobs:
       - name: 🔨 Build package
         run: yarn build
 
+      - name: Run tests
+        run: yarn test
+
       - name: Enter pre mode for beta (only on develop)
         if: github.ref == 'refs/heads/develop'
         run: |
