@@ -9,6 +9,8 @@
  */
 
 import { computeReputationScoring } from "./dist/index.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_OWNER = process.env.GITHUB_OWNER;
