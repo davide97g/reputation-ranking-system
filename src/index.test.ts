@@ -8,6 +8,7 @@ import {
   getReviews,
   initOctokit,
 } from "./repository";
+import { getAdditionsAndDeletionsForContributor } from "./utils";
 
 // mock octokit
 jest.mock("octokit", () => ({
@@ -38,6 +39,19 @@ jest.mock("octokit", () => ({
 }));
 
 jest.mock("./repository");
+jest.mock("./utils", () => ({
+  getAdditionsAndDeletionsForContributor: jest.fn().mockResolvedValue({
+    additions: 23,
+    deletions: 10,
+  }),
+}));
+
+global.fetch = jest.fn(
+  () =>
+    Promise.resolve({
+      json: () => Promise.resolve({ stats: { additions: 23, deletions: 10 } }),
+    }) as Promise<Response>,
+);
 
 describe("Reputation Scoring System", () => {
   beforeEach(() => {
@@ -56,6 +70,8 @@ describe("Reputation Scoring System", () => {
           commit: 0,
           issue: 0,
           docs: 0,
+          additions: 0,
+          deletions: 0,
         },
       });
     });
@@ -69,6 +85,8 @@ describe("Reputation Scoring System", () => {
           commit: 0,
           issue: 0,
           docs: 0,
+          additions: 0,
+          deletions: 0,
         },
       };
       increment(scores, "user1", "pr_opened", 2);
@@ -92,7 +110,37 @@ describe("Reputation Scoring System", () => {
         },
       ];
       const mockReviews = [{ user: { login: "user2" } }];
-      const mockCommits = [{ author: { login: "user3" } }];
+      const mockCommits = [
+        {
+          sha: "sha123",
+          node_id: "node456",
+          url: "https://mockurl.com",
+          html_url: "",
+          comments_url: "",
+          author: {
+            login: "user3",
+            name: "User Three",
+            email: "user3@test.com",
+          },
+          committer: { login: "user3" },
+          commit: {
+            author: { name: "User Three", email: "user3@test.com" },
+            committer: { name: "User Three", email: "user3@test.com" },
+            message: "test commit",
+            tree: { sha: "tree123", url: "https://tree.url" },
+            url: "https://mockurl.com",
+            comment_count: 0,
+            verification: {
+              verified: false,
+              reason: "",
+              signature: null,
+              payload: null,
+              verified_at: null,
+            },
+          },
+          parents: [],
+        },
+      ];
       const mockFilesChanged = ["docs/readme.md"];
       const mockFilesChangedFromCommit = [{ filename: "docs/changelog.md" }];
       const mockIssues = [{ user: { login: "user4" } }];
@@ -138,6 +186,9 @@ describe("Reputation Scoring System", () => {
       expect(getFilesChangedFromCommit).toHaveBeenCalledWith(
         "test-owner",
         "test-repo",
+        mockCommits[0],
+      );
+      expect(getAdditionsAndDeletionsForContributor).toHaveBeenCalledWith(
         mockCommits[0],
       );
       expect(getIssues).toHaveBeenCalledWith("test-owner", "test-repo");

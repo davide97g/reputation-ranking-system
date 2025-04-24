@@ -1,14 +1,10 @@
 # reputation-scoring
 
-## 0.3.0
-
-### Minor Changes
-
-- 88a7142: setup test with jest
+## 0.3.0-beta.2
 
 ### Patch Changes
 
-- 60ac2b0: Fix release action
+- d265382: feat: expose additions e deletions for each contributor
 
 ## 0.3.0-beta.1
 

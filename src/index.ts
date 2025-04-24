@@ -8,6 +8,7 @@ import {
   getReviews,
   initOctokit,
 } from "./repository.js";
+import { getAdditionsAndDeletionsForContributor } from "./utils";
 
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
@@ -17,10 +18,16 @@ const SCORE_RULES = {
   commit: 2,
   issue: 1,
   docs: 4,
-  complexity: 0.1,
+  additions: 0,
+  deletions: 0,
 };
 
-export function increment(scores: any, user: string, type: string, amount = 1) {
+export function increment(
+  scores: any,
+  user: string,
+  type: string,
+  amount: number = 1,
+) {
   if (!user) return;
   if (!scores[user]) {
     scores[user] = {
@@ -31,9 +38,12 @@ export function increment(scores: any, user: string, type: string, amount = 1) {
       issue: 0,
       docs: 0,
       complexity: 0,
+      additions: 0,
+      deletions: 0,
     };
   }
-  scores[user][type] += amount;
+
+  scores[user][type] += amount ?? 0;
 }
 
 /**
@@ -80,8 +90,11 @@ export async function computeReputationScoring({
   const commits = await getCommits(owner, repo);
   for (const commit of commits) {
     const author = commit.author?.login;
-    if (!author) console.info(commit);
+    const { additions, deletions } =
+      await getAdditionsAndDeletionsForContributor(commit);
     increment(scores, author, "commit");
+    increment(scores, author, "additions", additions);
+    increment(scores, author, "deletions", deletions);
 
     const files = await getFilesChangedFromCommit(owner, repo, commit);
 
