@@ -17,6 +17,7 @@ const SCORE_RULES = {
   commit: 2,
   issue: 1,
   docs: 4,
+  complexity: 0.1,
 };
 
 export function increment(scores: any, user: string, type: string, amount = 1) {
@@ -79,6 +80,7 @@ export async function computeReputationScoring({
   const commits = await getCommits(owner, repo);
   for (const commit of commits) {
     const author = commit.author?.login;
+    if (!author) console.info(commit);
     increment(scores, author, "commit");
 
     const files = await getFilesChangedFromCommit(owner, repo, commit);
@@ -94,9 +96,6 @@ export async function computeReputationScoring({
       if (extension === "js" || extension === "ts" || extension === "tsx") {
         if (f.patch) {
           const score = computeStructuralComplexity(f.patch, extension);
-          console.log(
-            `File: ${f.filename} - Complexity: ${score.toFixed(2)} - Author: ${author}`,
-          );
           increment(scores, author, "complexity", score);
         }
       }
