@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.3.0-beta.2
+
+### Patch Changes
+
+- d265382: feat: expose additions e deletions for each contributor
+
 ## 0.3.0-beta.1
 
 ### Minor Changes
