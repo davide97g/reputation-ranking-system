@@ -62,20 +62,3 @@ export interface Stats {
     deletions: number;
   };
 }
-
-export async function getAdditionsAndDeletionsForContributor(
-  commit: CommitData,
-) {
-  const commitInfo: Stats = await fetch(commit.url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    },
-  }).then((res) => res.json());
-
-  return {
-    additions: commitInfo.stats.additions ?? 0,
-    deletions: commitInfo.stats.deletions ?? 0,
-  };
-}

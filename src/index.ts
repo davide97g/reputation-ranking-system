@@ -1,5 +1,6 @@
 import { computeStructuralComplexity } from "./complexity.js";
 import {
+  getAdditionsAndDeletionsForContributor,
   getCommits,
   getFilesChanged,
   getFilesChangedFromCommit,
@@ -8,7 +9,6 @@ import {
   getReviews,
   initOctokit,
 } from "./repository.js";
-import { getAdditionsAndDeletionsForContributor } from "./utils";
 
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {

@@ -1,5 +1,6 @@
 import { computeReputationScoring, increment } from "./index";
 import {
+  getAdditionsAndDeletionsForContributor,
   getCommits,
   getFilesChanged,
   getFilesChangedFromCommit,
@@ -8,7 +9,6 @@ import {
   getReviews,
   initOctokit,
 } from "./repository";
-import { getAdditionsAndDeletionsForContributor } from "./utils";
 
 // mock octokit
 jest.mock("octokit", () => ({
@@ -39,12 +39,6 @@ jest.mock("octokit", () => ({
 }));
 
 jest.mock("./repository");
-jest.mock("./utils", () => ({
-  getAdditionsAndDeletionsForContributor: jest.fn().mockResolvedValue({
-    additions: 23,
-    deletions: 10,
-  }),
-}));
 
 global.fetch = jest.fn(
   () =>
@@ -154,6 +148,10 @@ describe("Reputation Scoring System", () => {
         mockFilesChangedFromCommit,
       );
       (getIssues as jest.Mock).mockResolvedValue(mockIssues);
+      (getAdditionsAndDeletionsForContributor as jest.Mock).mockResolvedValue({
+        additions: 23,
+        deletions: 10,
+      });
 
       const result = await computeReputationScoring({
         owner: "test-owner",

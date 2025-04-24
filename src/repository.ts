@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import { CommitData, Stats } from "./types";
 
 // Create an instance of Octokit with the token
 let octokit: Octokit | null = null;
@@ -74,4 +75,21 @@ export async function getFilesChangedFromCommit(
       ref: commit.sha,
     })
     .then((res: any) => res.data.files || []);
+}
+
+export async function getAdditionsAndDeletionsForContributor(
+  commit: CommitData,
+) {
+  const commitInfo: Stats = await fetch(commit.url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+  }).then((res) => res.json());
+
+  return {
+    additions: commitInfo.stats.additions ?? 0,
+    deletions: commitInfo.stats.deletions ?? 0,
+  };
 }
