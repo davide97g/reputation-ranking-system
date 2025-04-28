@@ -118,6 +118,14 @@ export async function computeReputationScoring({
   const userScores: {
     user: string;
     score: number;
+    pr_opened: number;
+    pr_merged: number;
+    review: number;
+    commit: number;
+    issue: number;
+    docs: number;
+    additions: number;
+    deletions: number;
   }[] = [];
   Object.entries(scores).forEach(([user, data]) => {
     const totalScore = Object.entries(data as any).reduce(
@@ -126,7 +134,18 @@ export async function computeReputationScoring({
     );
 
     console.log(`${user} → ${JSON.stringify(data)} ⇒ 🏆 Score: ${totalScore}`);
-    userScores.push({ user, score: totalScore });
+    userScores.push({
+      user,
+      score: totalScore,
+      pr_opened: (data as any)?.pr_opened,
+      pr_merged: (data as any)?.pr_merged,
+      review: (data as any)?.review,
+      commit: (data as any)?.commit,
+      issue: (data as any)?.issue,
+      docs: (data as any)?.docs,
+      additions: (data as any)?.additions,
+      deletions: (data as any)?.deletions,
+    });
   });
 
   return {
