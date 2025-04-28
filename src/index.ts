@@ -9,6 +9,21 @@ import {
 } from "./repository";
 import { getAdditionsAndDeletionsForContributor } from "./utils";
 
+interface Score {
+  pr_opened: number;
+  pr_merged: number;
+  review: number;
+  commit: number;
+  issue: number;
+  docs: number;
+  additions: number;
+  deletions: number;
+}
+
+interface Scores {
+  [user: string]: Score;
+}
+
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
   pr_opened: 5,
@@ -58,7 +73,7 @@ export async function computeReputationScoring({
   repo: string;
   token?: string;
 }) {
-  const scores = {};
+  const scores: Scores = {};
 
   initOctokit(token);
 
@@ -118,6 +133,14 @@ export async function computeReputationScoring({
   const userScores: {
     user: string;
     score: number;
+    pr_opened: number;
+    pr_merged: number;
+    review: number;
+    commit: number;
+    issue: number;
+    docs: number;
+    additions: number;
+    deletions: number;
   }[] = [];
   Object.entries(scores).forEach(([user, data]) => {
     const totalScore = Object.entries(data as any).reduce(
@@ -126,7 +149,18 @@ export async function computeReputationScoring({
     );
 
     console.log(`${user} → ${JSON.stringify(data)} ⇒ 🏆 Score: ${totalScore}`);
-    userScores.push({ user, score: totalScore });
+    userScores.push({
+      user,
+      score: totalScore,
+      pr_opened: data.pr_merged,
+      pr_merged: data.pr_merged,
+      review: data.review,
+      commit: data.commit,
+      issue: data.issue,
+      docs: data.docs,
+      additions: data.additions,
+      deletions: data.deletions,
+    });
   });
 
   return {

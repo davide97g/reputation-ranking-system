@@ -162,10 +162,54 @@ describe("Reputation Scoring System", () => {
       });
 
       expect(result.userScores).toEqual([
-        { user: "user1", score: 19 }, // pr_opened (5) + pr_merged (10) + docs (4)
-        { user: "user2", score: 3 }, // review (3)
-        { user: "user3", score: 6 }, // commit (2) + docs (4)
-        { user: "user4", score: 1 }, // issue (1)
+        {
+          additions: 0,
+          commit: 0,
+          deletions: 0,
+          docs: 1,
+          issue: 0,
+          pr_merged: 1,
+          pr_opened: 1,
+          review: 0,
+          score: 19,
+          user: "user1",
+        }, // pr_opened (5) + pr_merged (10) + docs (4)
+        {
+          user: "user2",
+          score: 3,
+          additions: 0,
+          commit: 0,
+          deletions: 0,
+          docs: 0,
+          issue: 0,
+          pr_merged: 0,
+          pr_opened: 0,
+          review: 1,
+        }, // review (3)
+        {
+          user: "user3",
+          score: 6,
+          additions: 23,
+          commit: 1,
+          deletions: 10,
+          docs: 1,
+          issue: 0,
+          pr_merged: 0,
+          pr_opened: 0,
+          review: 0,
+        }, // commit (2) + docs (4)
+        {
+          user: "user4",
+          score: 1,
+          additions: 0,
+          commit: 0,
+          deletions: 0,
+          docs: 0,
+          issue: 1,
+          pr_merged: 0,
+          pr_opened: 0,
+          review: 0,
+        }, // issue (1)
       ]);
 
       expect(result.stats).toEqual({
