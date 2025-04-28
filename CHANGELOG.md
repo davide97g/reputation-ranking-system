@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.3.0-beta.3
+
+### Patch Changes
+
+- fc590a7: Feat: expose the others information for each users
+
 ## 0.3.0-beta.2
 
 ### Patch Changes
