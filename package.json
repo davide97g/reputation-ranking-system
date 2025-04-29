@@ -8,7 +8,7 @@
   "scripts": {
     "format": "prettier --write .",
     "dev": "yarn build && source .env && node simulate.js",
-    "build": "tsc",
+    "build": "rm -r dist/* && tsc --build",
     "test": "jest",
     "package:preview": "npm pack --dry-run",
     "changeset": "npx changeset"

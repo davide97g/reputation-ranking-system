@@ -8,8 +8,8 @@
  * If you need to apply any changes to the function, please add comments and explanations.
  */
 
-import { computeReputationScoring } from "./dist/index.js";
 import dotenv from "dotenv";
+import { computeReputationScoring } from "./dist/index.js";
 dotenv.config();
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
