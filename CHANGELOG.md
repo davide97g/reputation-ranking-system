@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.3.0-beta.5
+
+### Patch Changes
+
+- a7aafe2: Fix deploy build clean
+
 ## 0.3.0-beta.4
 
 ### Patch Changes
