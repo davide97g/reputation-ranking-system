@@ -24,6 +24,20 @@ interface Scores {
   [user: string]: Score;
 }
 
+interface UserScore extends Score {
+  user: string;
+  score: number;
+}
+
+export interface ReputationScoringResult {
+  userScores: UserScore[];
+  stats: {
+    totalPullRequests: number;
+    totalCommits: number;
+    totalIssues: number;
+  };
+}
+
 // 🧮 Punteggi configurabili
 const SCORE_RULES = {
   pr_opened: 5,
@@ -72,7 +86,7 @@ export async function computeReputationScoring({
   owner: string;
   repo: string;
   token?: string;
-}) {
+}): Promise<ReputationScoringResult> {
   const scores: Scores = {};
 
   initOctokit(token);
