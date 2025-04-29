@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.3.0-beta.4
+
+### Patch Changes
+
+- fa19612: Feat: expose the result type of computing reputation scoring
+
 ## 0.3.0-beta.3
 
 ### Patch Changes
