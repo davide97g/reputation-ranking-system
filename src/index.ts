@@ -29,7 +29,7 @@ interface UserScore extends Score {
   score: number;
 }
 
-interface ReputationScoringResult {
+export interface ReputationScoringResult {
   userScores: UserScore[];
   stats: {
     totalPullRequests: number;
