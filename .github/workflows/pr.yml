@@ -31,3 +31,6 @@ jobs:
 
       - name: Run tests
         run: yarn test
+
+      - name: Preview Package build
+        run: yarn package:preview
