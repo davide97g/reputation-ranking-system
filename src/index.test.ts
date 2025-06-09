@@ -234,6 +234,7 @@ describe("Reputation Scoring System", () => {
       );
       expect(getAdditionsAndDeletionsForContributor).toHaveBeenCalledWith(
         mockCommits[0],
+        "test-token",
       );
       expect(getIssues).toHaveBeenCalledWith("test-owner", "test-repo");
     });
