@@ -1,5 +1,11 @@
 # reputation-scoring
 
+## 0.3.0-beta.6
+
+### Patch Changes
+
+- af83d05: Fix: add token in fetch commits
+
 ## 0.3.0-beta.5
 
 ### Patch Changes
