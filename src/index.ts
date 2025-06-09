@@ -87,6 +87,8 @@ export async function computeReputationScoring({
   repo: string;
   token?: string;
 }): Promise<ReputationScoringResult> {
+  if (!token) throw new Error("GitHub token is required");
+
   const scores: Scores = {};
 
   initOctokit(token);
@@ -118,7 +120,7 @@ export async function computeReputationScoring({
   for (const commit of commits) {
     const author = commit.author?.login;
     const { additions, deletions } =
-      await getAdditionsAndDeletionsForContributor(commit);
+      await getAdditionsAndDeletionsForContributor(commit, token);
     increment(scores, author, "commit");
     increment(scores, author, "additions", additions);
     increment(scores, author, "deletions", deletions);
